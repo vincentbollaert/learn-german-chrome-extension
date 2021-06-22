@@ -4,6 +4,7 @@ import cookieParser from 'cookie-parser'
 import logger from 'morgan'
 import dotenv from 'dotenv'
 import notion from '@notionhq/client'
+import cors from 'cors'
 
 import { router as dictionaryRouter } from './routes/dictionary.js'
 
@@ -18,8 +19,9 @@ app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
+app.use(cors())
 
-app.use('/dictionary', dictionaryRouter)
+app.use('/api/dictionary', dictionaryRouter)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

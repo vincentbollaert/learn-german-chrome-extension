@@ -14,6 +14,6 @@ export function getDictionary(req, res, next) {
       const meaningValue = meaning.rich_text[0].text.content
 
       console.log(wordValue, meaningValue)
-      return res.send(`${wordValue}: ${meaningValue}`)
+      return res.send({ [wordValue]: meaningValue })
     })
 }
