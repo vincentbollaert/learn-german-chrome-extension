@@ -1,0 +1,38 @@
+import createError from 'http-errors'
+import express from 'express'
+import cookieParser from 'cookie-parser'
+import logger from 'morgan'
+import dotenv from 'dotenv'
+import notion from '@notionhq/client'
+
+import { router as dictionaryRouter } from './routes/dictionary.js'
+
+dotenv.config({ path: './config.env' })
+
+export const app = express()
+export const notionClient = new notion.Client({
+  auth: process.env.NOTION_AUTH,
+})
+
+app.use(logger('dev'))
+app.use(express.json())
+app.use(express.urlencoded({ extended: false }))
+app.use(cookieParser())
+
+app.use('/dictionary', dictionaryRouter)
+
+// catch 404 and forward to error handler
+app.use(function (req, res, next) {
+  next(createError(404))
+})
+
+// error handler
+app.use(function (err, req, res, next) {
+  // set locals, only providing error in development
+  res.locals.message = err.message
+  res.locals.error = req.app.get('env') === 'development' ? err : {}
+
+  // render the error page
+  res.status(err.status || 500)
+  res.render('error')
+})
