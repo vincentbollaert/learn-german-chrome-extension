@@ -1,5 +1,6 @@
 import styled, { createGlobalStyle } from 'styled-components'
 import { Provider } from 'react-redux'
+import { ChakraProvider } from '@chakra-ui/react'
 import store from './store'
 import reset from './shared/styles/reset'
 import Questions from './Questions'
@@ -17,10 +18,12 @@ const Wrap = styled.div`
 function App() {
   return (
     <Provider store={store}>
-      <Wrap>
-        <GlobalStyle />
-        <Questions />
-      </Wrap>
+      <ChakraProvider>
+        <Wrap>
+          <GlobalStyle />
+          <Questions />
+        </Wrap>
+      </ChakraProvider>
     </Provider>
   )
 }
